@@ -1,0 +1,60 @@
+name: PHP GitHub Actions
+
+on: ['pull_request']
+
+jobs:
+
+  PHP-GitHub-Actions:
+
+    strategy:
+      fail-fast: true
+      matrix:
+        os: [ubuntu-latest]
+        php: [8.1]
+        dependency-version: [prefer-stable]
+
+    runs-on: ${{ matrix.os }}
+
+    name: Tests P${{ matrix.php }} - ${{ matrix.os }} - ${{ matrix.dependency-version }}
+
+    steps:
+
+    - name: Set git to use LF
+      run: |
+        git config --global core.autocrlf false
+        git config --global core.eol lf
+
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Composer Cache dependencies
+      uses: actions/cache@v3
+      with:
+        path: ~/.composer/cache/files
+        key: dependencies-php-${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ matrix.php }}
+        extensions: dom, mbstring, zip, intl
+        coverage: none
+        tools: php-cs-fixer:3.5, phpunit:9.5, psalm:4.24.0, phpstan:1.8.1, rector:0.13
+
+    - name: Install Composer dependencies
+      run: composer update --${{ matrix.dependency-version }} --no-interaction --prefer-dist
+
+    - name: Check code styling with PHP-CS
+      run: vendor/bin/phpcs --standard=PSR1,PSR2,PSR12 src/ test/
+
+    - name: Scan for bugs with PHPStan
+      run: vendor/bin/phpstan analyse --level=6 src/ test/
+
+    - name: Analyzing code with Psalm
+      run: vendor/bin/psalm
+
+    - name: Run Rector
+      run: vendor/bin/rector process --dry-run --debug
+
+    - name: Run tests with PHPUnit
+      run: vendor/bin/phpunit test/

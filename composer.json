@@ -1,0 +1,26 @@
+{
+    "name": "diogo/pdi-adapter",
+    "description": "Simple customer management application using Design Pattern Adapter",
+    "autoload": {
+        "psr-4": {
+            "Diogo\\PdiAdapter\\Application\\": "src/Application"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Test\\": "test/"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5",
+        "vimeo/psalm": "^4.24.0",
+        "squizlabs/php_codesniffer": "^3.7.1",
+        "phpstan/phpstan": "^1.8.1",
+        "rector/rector": "^0.13"
+    },
+    "scripts": {
+        "test": "phpunit",
+        "cs-check": "phpcs",
+        "cs-fix": "phpcbf"
+    }
+}
