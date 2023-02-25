@@ -3,7 +3,9 @@
     "description": "Simple customer management application using Design Pattern Adapter",
     "autoload": {
         "psr-4": {
-            "Diogo\\PdiAdapter\\Application\\": "src/Application"
+            "Diogo\\PdiAdapter\\Application\\": "src/Application",
+            "Diogo\\PdiAdapter\\Domain\\": "src/Domain",
+            "Diogo\\PdiAdapter\\Infrastructure\\": "src/Infrastructure"
         }
     },
     "autoload-dev": {
