@@ -3,7 +3,7 @@ version: '3'
 services:
 
   nginx:
-    container_name: usercontrol-nginx
+    container_name: pdi-nginx
     restart: always
     build:
       context: ./devops/nginx
@@ -20,7 +20,7 @@ services:
       - code-network
 
   php-fpm:
-    container_name: usercontrol-phpfpm
+    container_name: pdi-phpfpm
     restart: always
     build:
       context: ./devops/php-fpm
