@@ -21,7 +21,8 @@
         "vimeo/psalm": "^4.24.0",
         "squizlabs/php_codesniffer": "^3.7.1",
         "phpstan/phpstan": "^1.8.1",
-        "rector/rector": "^0.13"
+        "rector/rector": "^0.13",
+        "infection/infection": "^0.26.19"
     },
     "scripts": {
         "unit-test": "phpunit --do-not-cache-result test/",
@@ -31,5 +32,10 @@
         "psalm": "psalm",
         "rector": "rector process --dry-run --debug",
         "coverage": "XDEBUG_MODE=coverage phpunit --do-not-cache-result"
+    },
+    "config": {
+        "allow-plugins": {
+            "infection/extension-installer": true
+        }
     }
 }
