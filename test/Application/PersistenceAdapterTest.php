@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Test\Diogo\PdiAdapter\Application;
 
 use Diogo\PdiAdapter\Application\PersistenceAdapter;
-use Diogo\PdiAdapter\Domain\Client;
+use Diogo\PdiAdapter\Domain\ClientData;
 use Diogo\PdiAdapter\Infrastructure\CsvFilePersistence;
 use Diogo\PdiAdapter\Infrastructure\PersistenceInterface;
 use Diogo\PdiAdapter\Infrastructure\TextFilePersistence;
@@ -42,10 +42,10 @@ final class PersistenceAdapterTest extends TestCase
         array $expectedList,
         string $persistence
     ): void {
-        $client = new Client($id = '1', $name = 'Test', $email = 'test@test.com');
+        $clientData = new ClientData($id = '1', $name = 'Test', $email = 'test@test.com');
         
         $controller = new PersistenceAdapter($persistenceClass);
-        $controller->save($client);
+        $controller->save($clientData);
         $list = $controller->list();
 
         $this->assertEquals($expectedList, $list);

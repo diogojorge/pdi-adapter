@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Diogo\PdiAdapter\Infrastructure;
 
-use Diogo\PdiAdapter\Domain\Client;
+use Diogo\PdiAdapter\Domain\ClientData;
 
 final class CsvFilePersistence implements PersistenceInterface
 {
     public const FILE = 'src/Infrastructure/clients.csv';
 
-    public static function save(Client $client): void
+    public static function save(ClientData $clientData): void
     {
         $file = fopen(self::FILE, "a");
-        $fields = [$client->getId(), $client->getName(), $client->getEmail(),];
+        $fields = [$clientData->getId(), $clientData->getName(), $clientData->getEmail(),];
         fputcsv($file, $fields);
         fclose($file);
     }
