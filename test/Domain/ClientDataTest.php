@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Test\Diogo\PdiAdapter\Domain;
 
-use Diogo\PdiAdapter\Domain\Client;
+use Diogo\PdiAdapter\Domain\ClientData;
 use PHPUnit\Framework\TestCase;
 
-final class ClientTest extends TestCase
+final class ClientDataTest extends TestCase
 {
     /** @test */
     public function shouldCreateAsExpected(): void
@@ -16,7 +16,7 @@ final class ClientTest extends TestCase
         $expectedName = 'Test';
         $expectedEmail = 'test@test.com';
 
-        $client = new Client($expectedId, $expectedName, $expectedEmail);
+        $client = new ClientData($expectedId, $expectedName, $expectedEmail);
 
         $this->assertEquals($expectedId, $client->getId());
         $this->assertEquals($expectedName, $client->getName());

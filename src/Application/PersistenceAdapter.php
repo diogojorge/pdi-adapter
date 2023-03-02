@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Diogo\PdiAdapter\Application;
 
-use Diogo\PdiAdapter\Domain\Client;
+use Diogo\PdiAdapter\Domain\ClientData;
 use Diogo\PdiAdapter\Infrastructure\PersistenceInterface;
 
 final class PersistenceAdapter
@@ -16,9 +16,9 @@ final class PersistenceAdapter
         $this->persistence = $persistence;
     }
 
-    public function save(Client $client): void
+    public function save(ClientData $clientData): void
     {
-        $this->persistence->save($client);
+        $this->persistence->save($clientData);
     }
 
     /** @return array<int, string> */
