@@ -25,7 +25,7 @@
         "infection/infection": "^0.26.19"
     },
     "scripts": {
-        "unit-test": "phpunit --do-not-cache-result test/",
+        "unit-test": "phpunit --do-not-cache-result --colors=always test/",
         "phpcs-check": "phpcs --standard=PSR1,PSR2,PSR12 src/ test/",
         "phpcs-fix": "phpcbf",
         "phpstan": "phpstan analyse --level=6 src/ test/",
