@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Test\Diogo\PdiAdapter\Application;
 
-use Diogo\PdiAdapter\Application\PersistenceAdapter;
+use Diogo\PdiAdapter\Application\FilePersistenceController;
 use Diogo\PdiAdapter\Domain\ClientData;
-use Diogo\PdiAdapter\Infrastructure\CsvFilePersistence;
-use Diogo\PdiAdapter\Infrastructure\PersistenceInterface;
-use Diogo\PdiAdapter\Infrastructure\TextFilePersistence;
+use Diogo\PdiAdapter\Infrastructure\FilePersistence\CsvFilePersistence;
+use Diogo\PdiAdapter\Infrastructure\FilePersistence\FilePersistenceInterface;
+use Diogo\PdiAdapter\Infrastructure\FilePersistence\TextFilePersistence;
 use PHPUnit\Framework\TestCase;
 
-final class PersistenceAdapterTest extends TestCase
+final class FilePersistenceControllerTest extends TestCase
 {
     /** @return \Generator<string, mixed> */
     public function providesPersistencies(): iterable
@@ -38,13 +38,13 @@ final class PersistenceAdapterTest extends TestCase
      * @param array<int, mixed> $expectedList
     */
     public function filePersistenciesShouldSaveAndListAsExpected(
-        PersistenceInterface $persistenceClass,
+        FilePersistenceInterface $persistenceClass,
         array $expectedList,
         string $persistence
     ): void {
         $clientData = new ClientData($id = '1', $name = 'Test', $email = 'test@test.com');
         
-        $controller = new PersistenceAdapter($persistenceClass);
+        $controller = new FilePersistenceController($persistenceClass);
         $controller->save($clientData);
         $list = $controller->list();
 
@@ -64,12 +64,12 @@ final class PersistenceAdapterTest extends TestCase
      * @dataProvider providesPersistenciesWithoutFile
     */
     public function filePersistenciesShouldThrowExceptionIfPersisteFileDoesNotExist(
-        PersistenceInterface $persistenceClass
+        FilePersistenceInterface $persistenceClass
     ): void {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('File not found.');
 
-        $controller = new PersistenceAdapter($persistenceClass);
+        $controller = new FilePersistenceController($persistenceClass);
         $controller->list();
     }
 }

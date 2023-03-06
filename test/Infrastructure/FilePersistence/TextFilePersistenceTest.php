@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Test\Diogo\PdiAdapter\Infrastructure;
+namespace Test\Diogo\PdiAdapter\Infrastructure\FilePersistence;
 
-use Diogo\PdiAdapter\Application\PersistenceAdapter;
-use Diogo\PdiAdapter\Infrastructure\TextFilePersistence;
+use Diogo\PdiAdapter\Infrastructure\FilePersistence\TextFilePersistence;
 use PHPUnit\Framework\TestCase;
 use Diogo\PdiAdapter\Domain\ClientData;
 
@@ -23,7 +22,7 @@ final class TextFilePersistenceTest extends TestCase
         ];
         $clientData = new ClientData($id = '1', $name = 'Test', $email = 'test@test.com');
         
-        $controller = new PersistenceAdapter(new TextFilePersistence());
+        $controller = new TextFilePersistence();
         $controller->save($clientData);
         $list = $controller->list();
 
@@ -37,7 +36,7 @@ final class TextFilePersistenceTest extends TestCase
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('File not found.');
 
-        $controller = new PersistenceAdapter(new TextFilePersistence());
+        $controller = new TextFilePersistence();
         $controller->list();
     }
 }

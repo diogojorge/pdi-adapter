@@ -2,24 +2,28 @@
 
 declare(strict_types=1);
 
-namespace Diogo\PdiAdapter\Infrastructure;
+namespace Diogo\PdiAdapter\Infrastructure\FilePersistence;
 
 use Diogo\PdiAdapter\Domain\ClientData;
 
-final class CsvFilePersistence implements PersistenceInterface
+final class TextFilePersistence implements FilePersistenceInterface
 {
-    public const FILE = 'src/Infrastructure/clients.csv';
+    public const FILE = 'src/Infrastructure/FilePersistence/clients.txt';
 
-    public static function save(ClientData $clientData): void
+    public function save(ClientData $clientData): void
     {
         $file = fopen(self::FILE, "a");
-        $fields = [$clientData->getId(), $clientData->getName(), $clientData->getEmail(),];
-        fputcsv($file, $fields);
+        fwrite(
+            $file,
+            $clientData->getId() . PHP_EOL .
+            $clientData->getName() . PHP_EOL .
+            $clientData->getEmail() . PHP_EOL . PHP_EOL
+        );
         fclose($file);
     }
 
     /** @return array<int, string> */
-    public static function list(): array
+    public function list(): array
     {
         $list = [];
 
