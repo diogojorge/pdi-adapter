@@ -6,9 +6,9 @@ namespace Test\Diogo\PdiAdapter\Infrastructure\DBMSPersistence;
 
 use Diogo\PdiAdapter\Domain\ClientData;
 use Diogo\PdiAdapter\Infrastructure\DBMSPersistence\SQLiteDBMSPersistence;
-use PHPUnit\Framework\TestCase;
+use Test\PDITestCase;
 
-final class SQLiteDBMSPersistenceTest extends TestCase
+final class SQLiteDBMSPersistenceTest extends PDITestCase
 {
     /** @test */
     public function shouldSaveAsExpected(): void
@@ -21,6 +21,5 @@ final class SQLiteDBMSPersistenceTest extends TestCase
         $showResult = $controller->show();
 
         $this->assertEquals($expectedShowResult, $showResult);
-        unlink(SQLiteDBMSPersistence::SQLITEDB);
     }
 }
