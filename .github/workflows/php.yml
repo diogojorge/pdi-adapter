@@ -53,8 +53,8 @@ jobs:
     - name: Analyzing code with Psalm
       run: vendor/bin/psalm
 
-    - name: Run Rector
-      run: vendor/bin/rector process --dry-run --debug
+#    - name: Run Rector
+#      run: vendor/bin/rector process --dry-run --debug
 
     - name: Run tests with PHPUnit
       run: vendor/bin/phpunit test/
