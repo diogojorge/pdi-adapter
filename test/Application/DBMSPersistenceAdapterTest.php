@@ -5,15 +5,11 @@ declare(strict_types=1);
 namespace Test\Diogo\PdiAdapter\Application;
 
 use Diogo\PdiAdapter\Application\DBMSPersistenceAdapter;
-use Diogo\PdiAdapter\Application\FilePersistenceController;
 use Diogo\PdiAdapter\Domain\ClientData;
 use Diogo\PdiAdapter\Infrastructure\DBMSPersistence\SQLiteDBMSPersistence;
-use Diogo\PdiAdapter\Infrastructure\FilePersistence\CsvFilePersistence;
-use Diogo\PdiAdapter\Infrastructure\FilePersistence\FilePersistenceInterface;
-use Diogo\PdiAdapter\Infrastructure\FilePersistence\TextFilePersistence;
-use PHPUnit\Framework\TestCase;
+use Test\PDITestCase;
 
-final class DBMSPersistenceAdapterTest extends TestCase
+final class DBMSPersistenceAdapterTest extends PDITestCase
 {
     /**
      * @test
@@ -28,6 +24,5 @@ final class DBMSPersistenceAdapterTest extends TestCase
         $list = $controller->list();
 
         $this->assertEquals($expectedData, $list);
-        unlink(SQLiteDBMSPersistence::SQLITEDB);
     }
 }
