@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
 final class FilePersistenceControllerTest extends TestCase
 {
     /** @return \Generator<string, mixed> */
-    public function providesPersistencies(): iterable
+    public static function providesPersistencies(): iterable
     {
         yield 'CSV File' => [
             new CsvFilePersistence(),
@@ -43,7 +43,7 @@ final class FilePersistenceControllerTest extends TestCase
         string $persistence
     ): void {
         $clientData = new ClientData($id = '1', $name = 'Test', $email = 'test@test.com');
-        
+
         $controller = new FilePersistenceController($persistenceClass);
         $controller->save($clientData);
         $list = $controller->list();
@@ -53,7 +53,7 @@ final class FilePersistenceControllerTest extends TestCase
     }
 
     /** @return \Generator<string, mixed> */
-    public function providesPersistenciesWithoutFile(): iterable
+    public static function providesPersistenciesWithoutFile(): iterable
     {
         yield 'CSV File' => [new CsvFilePersistence(),];
         yield 'Text File' => [new TextFilePersistence(),];
