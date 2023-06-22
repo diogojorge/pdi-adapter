@@ -6,18 +6,17 @@ namespace Test;
 
 use Diogo\PdiAdapter\Infrastructure\DBMSPersistence\SQLiteDBMSPersistence;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\Before;
+use PHPUnit\Framework\Attributes\After;
 
 class PDITestCase extends TestCase
 {
-    /**
-     * @before
-     * @after
-    */
-    public function setup(): void
-    {
-        $db = SQLiteDBMSPersistence::SQLITEDB;
-        if (file_exists($db)) {
-            unlink($db);
-        }
-    }
+	#[Before, After]
+	public function clearFakeSQLiteDBs(): void
+	{
+		$db = SQLiteDBMSPersistence::SQLITEDB;
+		if (file_exists($db)) {
+			unlink($db);
+		}
+	}
 }
