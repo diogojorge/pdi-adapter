@@ -26,7 +26,7 @@
     },
     "scripts": {
         "unit-test": "phpunit --do-not-cache-result --colors=always test/",
-        "phpcs-check": "phpcs --standard=PSR1,PSR2,PSR12 src/ test/",
+        "phpcs-check": "phpcs --exclude=Generic.WhiteSpace.DisallowTabIndent --standard=PSR1,PSR2,PSR12 src/ test/",
         "phpcs-fix": "phpcbf",
         "phpstan": "phpstan analyse --level=6 src/ test/",
         "psalm": "psalm",
