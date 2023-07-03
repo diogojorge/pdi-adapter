@@ -15,7 +15,7 @@ final class CreditCardPaymentTypeTest extends TestCase
 	public function processRequestShouldReturnExpectedResponse(): void
 	{
 		$payment = new PaymentData('1', 'produto', 10);
-		$expectedResponse = json_encode($this->getExpectedResponse($payment));
+		$expectedResponse = json_encode($this->getExpectedResponse($payment), JSON_PRETTY_PRINT);
 
 		$response = (new CreditCardPaymentType())->processRequest($payment);
 
@@ -23,11 +23,9 @@ final class CreditCardPaymentTypeTest extends TestCase
 		$this->assertEquals($expectedResponse, (string)$response->getBody());
 	}
 
-	/**
-	 * @return array<string, string>
-	 */
+	/** @return array<string, mixed> */
 	private function getExpectedResponse(PaymentData $payment): array
 	{
-		return ['id' => "{$payment->getId()}", 'status' => 'OK',];
+		return ['id' => (int)$payment->getId(), 'status' => 'OK',];
 	}
 }
