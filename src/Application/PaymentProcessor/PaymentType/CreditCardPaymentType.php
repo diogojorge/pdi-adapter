@@ -11,7 +11,7 @@ use Psr\Http\Message\ResponseInterface;
 final class CreditCardPaymentType implements PaymentTypeInterface
 {
 	private const REQUEST_METHOD = 'PUT';
-	private const REQUEST_URI = 'https://run.mocky.io/v3/fb5e99ac-c6a3-4cc4-a720-a14effece02a';
+	private const REQUEST_URI = 'https://run.mocky.io/v3/e6465368-bd5d-42ae-916d-89a94982e720';
 
 	public function processRequest(PaymentData $payment): ResponseInterface
 	{
