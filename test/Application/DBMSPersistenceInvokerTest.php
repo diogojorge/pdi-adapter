@@ -9,18 +9,18 @@ use Diogo\PdiAdapter\Application\DBMSPersistenceInvoker;
 use Diogo\PdiAdapter\Application\DBMSPersistenceShowCommand;
 use Diogo\PdiAdapter\Domain\ClientData;
 use Diogo\PdiAdapter\Infrastructure\DBMSPersistence\SQLiteDBMSPersistence;
+use Diogo\PdiAdapter\Application\Commons\EnvironmentEnum;
 use Test\PDITestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 final class DBMSPersistenceInvokerTest extends PDITestCase
 {
-    /**
-     * @test
-    */
+    #[Test]
     public function shouldInsertAndShowDataAsExpected(): void
     {
         $clientData = new ClientData($id = '1', $name = 'Test', $email = 'test@test.com');
         $expectedClientDataArray = [0 => '1,Test,test@test.com'];
-        $persistence = new SQLiteDBMSPersistence();
+        $persistence = new SQLiteDBMSPersistence(EnvironmentEnum::fromEnvironment('TEST'));
         $invoker = new DBMSPersistenceInvoker();
         $invoker->setInsertCommand(new DBMSPersistenceInsertCommand($persistence, $clientData));
         $invoker->setShowCommand(new DBMSPersistenceShowCommand($persistence));
