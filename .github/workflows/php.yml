@@ -17,6 +17,13 @@ jobs:
 
     name: Tests P${{ matrix.php }} - ${{ matrix.os }} - ${{ matrix.dependency-version }}
 
+    service:
+      redis:
+        image: redis
+        ports:
+          - 6379/tcp
+        options: --health-cmd="redis-cli ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
     steps:
 
     - name: Set git to use LF
@@ -37,7 +44,7 @@ jobs:
       uses: shivammathur/setup-php@v2
       with:
         php-version: ${{ matrix.php }}
-        extensions: dom, mbstring, zip, intl
+        extensions: dom, mbstring, zip, intl, redis
         coverage: none
         tools: php-cs-fixer:3.5, phpunit:9.5, psalm:4.24.0, phpstan:1.8.1, rector:0.13
 
@@ -58,3 +65,5 @@ jobs:
 
     - name: Run tests with PHPUnit
       run: vendor/bin/phpunit --no-coverage --do-not-cache-result --colors=always test/
+      env:
+        REDIS_PORT: ${{ job.services.redis.ports['6379'] }}
