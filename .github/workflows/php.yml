@@ -17,7 +17,7 @@ jobs:
 
     name: Tests P${{ matrix.php }} - ${{ matrix.os }} - ${{ matrix.dependency-version }}
 
-    service:
+    services:
       redis:
         image: redis
         ports:
