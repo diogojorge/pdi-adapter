@@ -21,7 +21,7 @@ jobs:
       pdi-redis:
         image: redis
         ports:
-          - 6379/tcp
+          - 6379:6379
         options: --health-cmd="redis-cli ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
@@ -66,4 +66,5 @@ jobs:
     - name: Run tests with PHPUnit
       run: vendor/bin/phpunit --no-coverage --do-not-cache-result --colors=always test/
       env:
-        REDIS_PORT: ${{ job.services.redis.ports['6379'] }}
+        REDIS_HOST: pdi-redis
+        REDIS_PORT: 6379
