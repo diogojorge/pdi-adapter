@@ -15,7 +15,6 @@ services:
       - ./:/var/www/html
     links:
       - php-fpm
-      - redis:pdi-redis
     networks:
       - code-network
 
