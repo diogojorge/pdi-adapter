@@ -33,7 +33,7 @@
         "phpcs-check": "phpcs --exclude=Generic.WhiteSpace.DisallowTabIndent --standard=PSR1,PSR2,PSR12 src/ test/",
         "phpcs-fix": "phpcbf",
         "phpstan": "phpstan analyse --level=6 src/ test/",
-        "psalm": "psalm",
+        "psalm": "psalm --no-cache",
         "rector": "rector process --dry-run --debug",
         "coverage": "XDEBUG_MODE=coverage phpunit --do-not-cache-result"
     },
