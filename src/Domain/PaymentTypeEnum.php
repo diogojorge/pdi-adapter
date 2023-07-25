@@ -21,4 +21,10 @@ enum PaymentTypeEnum: string
     {
         return array_column(PaymentTypeEnum::cases(), 'name', 'value');
     }
+
+	/** @psalm-suppress MixedInferredReturnType, MixedReturnStatement */
+	public static function fromName(string $name): self
+	{
+        return constant("self::$name");
+    }
 }

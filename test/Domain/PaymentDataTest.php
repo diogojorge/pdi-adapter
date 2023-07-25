@@ -11,7 +11,7 @@ use PHPUnit\Framework\Attributes\Test;
 final class PaymentDataTest extends TestCase
 {
     #[Test]
-    public function shouldCreateAsExpected(): void
+    public function shouldCreateAsExpectedAndSetNewStatus(): void
     {
         $expectedId = '1';
         $expectedDescription = 'Test';
@@ -22,5 +22,12 @@ final class PaymentDataTest extends TestCase
         $this->assertEquals($expectedId, $payment->getId());
         $this->assertEquals($expectedDescription, $payment->getDescription());
         $this->assertEquals($expectedAmount, $payment->getAmount());
+        $this->assertEquals($expectedStatus = 'open', $payment->getStatus());
+
+		$newStatus = 'pending';
+
+		$payment->setStatus($newStatus);
+
+		$this->assertEquals($newStatus, $payment->getStatus());
     }
 }

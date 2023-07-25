@@ -58,7 +58,7 @@ jobs:
       run: vendor/bin/phpstan analyse --level=6 src/ test/
 
     - name: Analyzing code with Psalm
-      run: vendor/bin/psalm
+      run: vendor/bin/psalm --no-cache
 
 #    - name: Run Rector
 #      run: vendor/bin/rector process --dry-run --debug

@@ -9,9 +9,15 @@ final class PaymentData
     public function __construct(
         private string $id,
         private string $description,
-        private float $amount
+        private float $amount,
+		private string $status = 'open'
     ) {
     }
+
+	public function setStatus(string $status): void
+	{
+		$this->status = $status;
+	}
 
     public function getId(): string
     {
@@ -27,4 +33,9 @@ final class PaymentData
     {
         return $this->amount;
     }
+
+	public function getStatus(): string
+	{
+		return $this->status;
+	}
 }
