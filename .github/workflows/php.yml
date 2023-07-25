@@ -14,7 +14,7 @@ jobs:
         dependency-version: [prefer-stable]
 
     runs-on: ${{ matrix.os }}
-
+    container: ubuntu
     name: Tests P${{ matrix.php }} - ${{ matrix.os }} - ${{ matrix.dependency-version }}
 
     services:
@@ -65,6 +65,3 @@ jobs:
 
     - name: Run tests with PHPUnit
       run: vendor/bin/phpunit --no-coverage --do-not-cache-result --colors=always test/
-      env:
-        REDIS_HOST: pdi-redis
-        REDIS_PORT: 6379
