@@ -35,16 +35,16 @@ jobs:
         path: ~/.composer/cache/files
         key: dependencies-php-${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}
 
-    - name: Set git to use LF
-      run: |
-        git config --global core.autocrlf false
-        git config --global core.eol lf
+#    - name: Set git to use LF
+#      run: |
+#        git config --global core.autocrlf false
+#        git config --global core.eol lf
 
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
       with:
         php-version: ${{ matrix.php }}
-        extensions: dom, mbstring, zip, intl, redis
+        extensions: dom, mbstring, zip, intl, redis, sqlite3
         coverage: none
         tools: php-cs-fixer:3.5, phpunit:9.5, psalm:4.24.0, phpstan:1.8.1, rector:0.13
 
