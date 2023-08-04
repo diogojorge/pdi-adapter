@@ -18,7 +18,13 @@ final class DBMSPersistenceInvokerTest extends PDITestCase
     #[Test]
     public function shouldInsertAndShowDataAsExpected(): void
     {
-        $clientData = new ClientData($id = '1', $name = 'Test', $email = 'test@test.com');
+		$clientData = new ClientData(
+			$id = '1',
+			$name = 'Test',
+			$email = 'test@test.com',
+			$cpf = '11111111111',
+			$lastCpfValidation = '2023-08-01 06:00:00'
+		);
         $expectedClientDataArray = [0 => '1,Test,test@test.com'];
         $persistence = new SQLiteDBMSPersistence(EnvironmentEnum::fromEnvironment('TEST'));
         $invoker = new DBMSPersistenceInvoker();

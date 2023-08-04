@@ -10,6 +10,8 @@ use Diogo\PdiAdapter\Infrastructure\FilePersistence\CsvFilePersistence;
 use Diogo\PdiAdapter\Infrastructure\FilePersistence\FilePersistenceInterface;
 use Diogo\PdiAdapter\Infrastructure\FilePersistence\TextFilePersistence;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 final class FilePersistenceControllerTest extends TestCase
 {
@@ -32,17 +34,22 @@ final class FilePersistenceControllerTest extends TestCase
             TextFilePersistence::FILE,
         ];
     }
-    /**
-     * @test
-     * @dataProvider providesPersistencies
-     * @param array<int, mixed> $expectedList
-    */
+
+    /** @param array<int, mixed> $expectedList */
+	#[Test]
+	#[DataProvider('providesPersistencies')]
     public function filePersistenciesShouldSaveAndListAsExpected(
         FilePersistenceInterface $persistenceClass,
         array $expectedList,
         string $persistence
     ): void {
-        $clientData = new ClientData($id = '1', $name = 'Test', $email = 'test@test.com');
+		$clientData = new ClientData(
+			$id = '1',
+			$name = 'Test',
+			$email = 'test@test.com',
+			$cpf = '11111111111',
+			$lastCpfValidation = '2023-08-01 06:00:00'
+		);
 
         $controller = new FilePersistenceController($persistenceClass);
         $controller->save($clientData);
@@ -59,10 +66,8 @@ final class FilePersistenceControllerTest extends TestCase
         yield 'Text File' => [new TextFilePersistence(),];
     }
 
-    /**
-     * @test
-     * @dataProvider providesPersistenciesWithoutFile
-    */
+	#[Test]
+	#[DataProvider('providesPersistenciesWithoutFile')]
     public function filePersistenciesShouldThrowExceptionIfPersisteFileDoesNotExist(
         FilePersistenceInterface $persistenceClass
     ): void {
