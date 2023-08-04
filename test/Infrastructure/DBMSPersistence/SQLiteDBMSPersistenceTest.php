@@ -16,7 +16,13 @@ final class SQLiteDBMSPersistenceTest extends PDITestCase
     public function shouldSaveAsExpected(): void
     {
         $expectedShowResult = [0 => '1,Test,test@test.com',];
-        $clientData = new ClientData($id = '1', $name = 'Test', $email = 'test@test.com');
+		$clientData = new ClientData(
+			$id = '1',
+			$name = 'Test',
+			$email = 'test@test.com',
+			$cpf = '11111111111',
+			$lastCpfValidation = '2023-08-01 06:00:00'
+		);
 
         $controller = new SQLiteDBMSPersistence(EnvironmentEnum::fromEnvironment('TEST'));
         $controller->insert($clientData);
@@ -28,7 +34,13 @@ final class SQLiteDBMSPersistenceTest extends PDITestCase
 	#[Test]
     public function shouldVerifyIfIsClientEmailRegistered(): void
     {
-        $clientData = new ClientData($id = '1', $name = 'Test', $email = 'test@test.com');
+		$clientData = new ClientData(
+			$id = '1',
+			$name = 'Test',
+			$email = 'test@test.com',
+			$cpf = '11111111111',
+			$lastCpfValidation = '2023-08-01 06:00:00'
+		);
 
         $controller = new SQLiteDBMSPersistence(EnvironmentEnum::fromEnvironment('TEST'));
         $controller->insert($clientData);

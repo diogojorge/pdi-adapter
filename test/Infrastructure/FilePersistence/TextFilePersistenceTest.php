@@ -7,10 +7,11 @@ namespace Test\Diogo\PdiAdapter\Infrastructure\FilePersistence;
 use Diogo\PdiAdapter\Infrastructure\FilePersistence\TextFilePersistence;
 use PHPUnit\Framework\TestCase;
 use Diogo\PdiAdapter\Domain\ClientData;
+use PHPUnit\Framework\Attributes\Test;
 
 final class TextFilePersistenceTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function shouldSaveAsExpected(): void
     {
         $expectedData =
@@ -20,8 +21,14 @@ final class TextFilePersistenceTest extends TestCase
             2 => 'test@test.com',
             3 => '',
         ];
-        $clientData = new ClientData($id = '1', $name = 'Test', $email = 'test@test.com');
-        
+        $clientData = new ClientData(
+			$id = '1',
+			$name = 'Test',
+			$email = 'test@test.com',
+			$cpf = '11111111111',
+			$lastCpfValidation = '2023-08-01 06:00:00'
+		);
+
         $controller = new TextFilePersistence();
         $controller->save($clientData);
         $list = $controller->list();
@@ -30,7 +37,7 @@ final class TextFilePersistenceTest extends TestCase
         unlink(TextFilePersistence::FILE);
     }
 
-    /** @test */
+    #[Test]
     public function shouldThrowExceptionIfPersisteFileDoesNotExist(): void
     {
         $this->expectException(\Exception::class);
