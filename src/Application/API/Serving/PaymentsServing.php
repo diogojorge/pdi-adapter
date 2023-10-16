@@ -17,6 +17,8 @@ use GuzzleHttp\Psr7\Request;
 
 final class PaymentsServing
 {
+	private const CPF_VALIDATION_TIMEOUT = 15;
+
 	/** @psalm-suppress PossiblyInvalidCast, PossiblyInvalidArgument, InvalidStringClass, RiskyCast, ArgumentTypeCoercion, ForbiddenCode */
 	public static function execute(): void
 	{
@@ -28,12 +30,11 @@ final class PaymentsServing
 			self::validateRequestMethod();
 			self::validateRequiredFields();
 			self::validatePaymentType();
-			self::validateClientEmail();
-
 			$circuitBreaker = new CircuitBreaker('CPF_VALIDATION_TIMEOUT');
 			if (!$circuitBreaker->isOpen()) {
 				self::validateCPF();
 			}
+			self::validateClientEmail();
 
 			$payment = new PaymentData('1', 'compra do ' . (string)$_POST['name'], (float)$_POST['amount']);
 			$normalizePaymentType = mb_strtoupper($_POST['payment_type']);
@@ -94,7 +95,13 @@ final class PaymentsServing
 		$controller = new SQLiteDBMSPersistence(EnvironmentEnum::fromEnvironment('PRODUCTION'));
 		$isClientEmailRegistered = $controller->isClientEmailRegistered($_POST['email']);
 		if (!$isClientEmailRegistered) {
-			$newClient = new ClientData('1', $_POST['name'], $_POST['email'], $_POST['cpf'], date("Y-m-d H:i:s"));
+			$circuitBreaker = new CircuitBreaker('CPF_VALIDATION_TIMEOUT');
+			if ($circuitBreaker->isOpen()) {
+				$lastCpfValidation = null;
+			} else {
+				$lastCpfValidation = date("Y-m-d H:i:s");
+			}
+			$newClient = new ClientData('1', $_POST['name'], $_POST['email'], $_POST['cpf'], $lastCpfValidation);
 			$controller->insert($newClient);
 		}
 	}
@@ -114,7 +121,7 @@ final class PaymentsServing
 				['Content-Type' => 'application/json'],
 				json_encode(['cpf' => $_POST['cpf'],]),
 			);
-			$requestResult = $client->send($requestCPFValidation, ['timeout' => 15,]);
+			$requestResult = $client->send($requestCPFValidation, ['timeout' => self::CPF_VALIDATION_TIMEOUT,]);
 			$response = json_decode((string)$requestResult->getBody());
 			if ($response->status !== 'OK') {
 				throw new \Exception("Invalid CPF: `{$_POST['cpf']}`");

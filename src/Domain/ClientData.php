@@ -11,7 +11,7 @@ final class ClientData
         private string $name,
         private string $email,
 		private string $cpf,
-		private string $lastCpfValidation
+		private ?string $lastCpfValidation
     ) {
     }
 
@@ -35,7 +35,7 @@ final class ClientData
 		return $this->cpf;
 	}
 
-	public function getLastCpfValidation(): string
+	public function getLastCpfValidation(): ?string
 	{
 		return $this->lastCpfValidation;
 	}

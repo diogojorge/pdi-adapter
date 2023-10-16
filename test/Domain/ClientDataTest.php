@@ -27,4 +27,22 @@ final class ClientDataTest extends TestCase
         $this->assertEquals($expectedCpf, $client->getCpf());
         $this->assertEquals($expectedLastCpfValidation, $client->getLastCpfValidation());
     }
+
+	#[Test]
+    public function shouldCreateWithNullLastCpfValidation(): void
+    {
+        $expectedId = '1';
+        $expectedName = 'Test';
+        $expectedEmail = 'test@test.com';
+		$expectedCpf = '11111111111';
+		$expectedLastCpfValidation = null;
+
+        $client = new ClientData($expectedId, $expectedName, $expectedEmail, $expectedCpf, $expectedLastCpfValidation);
+
+        $this->assertEquals($expectedId, $client->getId());
+        $this->assertEquals($expectedName, $client->getName());
+        $this->assertEquals($expectedEmail, $client->getEmail());
+        $this->assertEquals($expectedCpf, $client->getCpf());
+        $this->assertNull($client->getLastCpfValidation());
+    }
 }
