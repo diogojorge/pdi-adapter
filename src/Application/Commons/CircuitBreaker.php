@@ -10,7 +10,7 @@ final class CircuitBreaker
 
 	public function __construct(
 		private string $cbKey = 'cb',
-		private int $cbOpenCircuitTime = 15
+		private int $cbOpenCircuitTimeInSeconds = 15
 	) {
 		$this->redis = new \Redis();
 		$this->redis->connect('pdi-redis', 6379);
@@ -18,7 +18,7 @@ final class CircuitBreaker
 
 	public function open(): void
 	{
-		$this->redis->setex($this->cbKey, $this->cbOpenCircuitTime, 'true');
+		$this->redis->setex($this->cbKey, $this->cbOpenCircuitTimeInSeconds, 'true');
 	}
 
 	public function close(): void
