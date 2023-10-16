@@ -5,12 +5,14 @@
 >
 > **PDI - Stage 4** - Implement a payment system, where to add new payment methods you do not need to modify the existing code using the Open-Closed principle of SOLID.
 >
+> **PDI - Stage 5** - Implement the Circuit Breaker Pattern in the payment system developed in stage 4.
 
 ## Summary
 1. [Introduction](#1-introduction)
     - 1.1 [Adapter design pattern](#11-adapter-desing-pattern)
     - 1.2 [Command design pattern](#12-comand-desing-pattern)
 	- 1.3 [Open-Closed principle](#13-open-closed-principle)
+	- 1.4 [Circuit Breaker Pattern](#14-circuit-breaker-pattern)
 2. [Firsts steps](#2-firsts-steps)
 3. [Motivation](#3-motivation)
 4. [Structure](#4-structure)
@@ -40,6 +42,9 @@ The *Command* pattern encapsulates a single function free of any variable in obj
 
 ### 1.3 Open-Closed principle
 This principle says that objects or entities should be open for extension, but closed for modification. When new behaviors and resources need to be added to the software, we should extend and not alter the existing code.
+
+### 1.4 Circuit Breaker Pattern
+The Circuit Breaker Pattern is designed to monitor and prevent faults from happening in a cascade way in software development.
 
 ## 2. Firsts steps
 
@@ -73,6 +78,8 @@ $ composer coverage
 * Make use of the command pattern so that we can handle the actions of inserting and listing customers.
 ### Stage 4
 * Add new functionality to the system to accept payments. The architecture to be used has to allow that for each new payment method the existing code does not need to be modified.
+### Stage 5
+* When processing the payment, we must check the customer's CPF. If the endpoint where we check the CPF is down, we will trigger the circuit breaker and flag the customer who has not been checked.
 
 ## 4. Structure
 ### 4.1 Adapter structure
@@ -100,3 +107,4 @@ $ composer coverage
 * [DesignPatternsPHP - Structural: Adapter / Wrapper](https://designpatternsphp.readthedocs.io/en/latest/Structural/Adapter/README.html)
 * [DesignPatternsPHP - Behavioral: Command](https://designpatternsphp.readthedocs.io/en/latest/Behavioral/Command/README.html)
 * [PHP The Right Way - Complex Problem: S.O.L.I.D.](https://phptherightway.com/#complex_problem)
+* [Implementing the Circuit Breaker Pattern](https://medium.com/@edouard.courty/implementing-the-circuit-breaker-pattern-in-php-5123b8cca271)
